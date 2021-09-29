@@ -72,6 +72,8 @@ def gradeHelper(tup, tableset):
             grade_high(tableset, int(tup[0]))
         elif tup[1] == "L" or tup[1] == "Low":
             grade_low(tableset, int(tup[0]))
+        elif tup[1] == "T" or tup[1] == "Teachers":
+            grade_teachers(tableset, int(tup[0]))
     else:
         grade(tableset, tup[0])
 
@@ -91,6 +93,8 @@ def initiatePrompt(tableset):
         quit()
     elif req == "I" or req == "Info":
         info(tableset)
+    elif req == "E" or req == "Enrollment":
+        enrollment(tableset)
     parseInput(req, tableset)
 
 
@@ -174,6 +178,9 @@ def grade_low(table, grade):
                   tup[BUS])
     initiatePrompt(table)
 
+def grade_teachers(table, grade):
+    print("Not written yet")
+
 
 def average(table, grade):
     total = 0.0
@@ -195,6 +202,9 @@ def info(table):
                 total += 1
         print(str(i) + ":", str(total))
     initiatePrompt(table)
+
+def enrollment(table):
+    print("Not written yet")
 
 def prompt():
     print('''Commands:
