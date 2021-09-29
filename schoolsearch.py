@@ -1,14 +1,16 @@
-import fileinput
-
-
 def main():
     try:
-        f = open("students.txt", "r")
+        list = open("list.txt", "r")
+        teachers = open("teachers.txt", "r")
     except(FileNotFoundError):
-        print("No file 'students.txt' found.")
+        print("One or more files missing: 'list.txt', 'teachers.txt'!")
         quit()
-    tableset = formatData(f)
-    f.close()
+    tableset = formatList(list)
+    teacherset = formatTeachers(teachers)
+    print(tableset)
+    print(teacherset)
+    list.close()
+    teachers.close()
     initiatePrompt(tableset)
 
 
@@ -18,19 +20,28 @@ GRADE = 2  # INT
 CLASSROOM = 3  # INT
 BUS = 4  # INT
 GPA = 5  # FLOAT
-TEACHER_LAST = 6  # STRING
-TEACHER_FIRST = 7  # STRING
 
 
-def formatData(file):
+def formatList(file):
     tableset = set([])
     for line in file.readlines():
         splitline = tuple([item.strip() for item in line.split(",")])
-        if len(splitline) != 8:
-            print("Incorrect file format for 'students.txt'")
+        if len(splitline) != 6:
+            print("Incorrect file format for 'list.txt'!")
             quit()
         tableset.add(splitline)
     return tableset
+
+
+def formatTeachers(file):
+    teacherset = set([])
+    for line in file.readlines():
+        splitline = tuple([item.strip() for item in line.split(",")])
+        if len(splitline) != 3:
+            print("Incorrect file format for 'teachers.txt'!")
+            quit()
+        teacherset.add(splitline)
+    return teacherset
 
 
 def parseInput(request, tableset):
