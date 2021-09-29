@@ -9,7 +9,7 @@ def main():
     teacherset = formatTeachers(teachers)
     list.close()
     teachers.close()
-    initiatePrompt(tableset)
+    initiatePrompt(tableset, teacherset)
 
 
 # list.txt, ex: (COOKUS, XUAN, 3, 107, 52, 3.07)
@@ -48,19 +48,19 @@ def formatTeachers(file):
     return teacherset
 
 
-def parseInput(request, tableset):
+def parseInput(request, tableset, teacherset):
     pair = tuple([item.strip() for item in request.split(":")])
     if len(pair) > 1:
         if pair[0] == "Student" or pair[0] == "S":
-            studentHelper([item.strip() for item in pair[1].split(" ")], tableset)
+            studentHelper([item.strip() for item in pair[1].split(" ")], tableset, teacherset)
         if pair[0] == "Teacher" or pair[0] == "T":
-            teacher(tableset, pair[1])
+            teacher(tableset, teacherset, pair[1])
         if pair[0] == "Bus" or pair[0] == "B":
-            bus(tableset, int(pair[1]))
+            bus(tableset, teacherset, int(pair[1]))
         if pair[0] == "Grade" or pair[0] == "G":
-            gradeHelper([item.strip() for item in pair[1].split(" ")], tableset)
+            gradeHelper([item.strip() for item in pair[1].split(" ")], tableset, teacherset)
         if pair[0] == "Average" or pair[0] == "A":
-            average(tableset, int(pair[1]))
+            average(tableset, teacherset, int(pair[1]))
 
 
 def getTeacher(tableset, teacherset, last_name):
@@ -74,26 +74,26 @@ def getTeacher(tableset, teacherset, last_name):
 
 
 
-def studentHelper(tup, tableset):
+def studentHelper(tup, tableset, teacherset):
     if len(tup) == 1:
-        student(tableset, tup[0])
+        student(tableset, teacherset, tup[0])
     elif len(tup) == 2:
-        student_bus(tableset, tup[0])
+        student_bus(tableset, teacherset, tup[0])
 
 
-def gradeHelper(tup, tableset):
+def gradeHelper(tup, tableset, teacherset):
     if len(tup) == 2:
         if tup[1] == "H" or tup[1] == "High":
-            grade_high(tableset, int(tup[0]))
+            grade_high(tableset, teacherset, int(tup[0]))
         elif tup[1] == "L" or tup[1] == "Low":
-            grade_low(tableset, int(tup[0]))
+            grade_low(tableset, teacherset, int(tup[0]))
         elif tup[1] == "T" or tup[1] == "Teachers":
-            grade_teachers(tableset, int(tup[0]))
+            grade_teachers(tableset, teacherset, int(tup[0]))
     else:
-        grade(tableset, tup[0])
+        grade(tableset, teacherset, tup[0])
 
 
-def initiatePrompt(tableset):
+def initiatePrompt(tableset, teacherset):
     req = prompt()
     while (req != "I" and req != "Info" and
            req != "Q" and req != "Quit" and
@@ -107,97 +107,100 @@ def initiatePrompt(tableset):
     if req == "Q" or req == "Quit":
         quit()
     elif req == "I" or req == "Info":
-        info(tableset)
+        info(tableset, teacherset)
     elif req == "E" or req == "Enrollment":
-        enrollment(tableset)
-    parseInput(req, tableset)
+        enrollment(tableset, teacherset)
+    parseInput(req, tableset, teacherset)
 
 
-def student(table, last_name):
-    for tup in table:
+def student(tableset, teacherset, last_name):
+    for tup in tableset:
         if tup[STUDENT_LAST].upper() == last_name.upper():
             print(tup[STUDENT_LAST],
                   tup[STUDENT_FIRST],
                   tup[GRADE],
                   tup[CLASSROOM],
-                  tup[TEACHER_LAST],
-                  tup[TEACHER_FIRST])
-    initiatePrompt(table)
+                  #tup[TEACHER_LAST],
+                  #tup[TEACHER_FIRST]
+                  )
+    initiatePrompt(tableset, teacherset)
 
 
-def student_bus(table, last_name):
-    for tup in table:
+def student_bus(tableset, teacherset, last_name):
+    for tup in tableset:
         if tup[STUDENT_LAST].upper() == last_name.upper():
             print(tup[STUDENT_LAST],
                   tup[STUDENT_FIRST],
                   tup[BUS])
-    initiatePrompt(table)
+    initiatePrompt(tableset, teacherset)
 
 
-def teacher(table, last_name):
-    for tup in table:
-        if tup[TEACHER_LAST].upper() == last_name.upper():
-            print(tup[STUDENT_LAST],
-                  tup[STUDENT_FIRST])
-    initiatePrompt(table)
+def teacher(tableset, teacherset, last_name):
+    # REWRITE
+    #for tup in tableset:
+        #if tup[TEACHER_LAST].upper() == last_name.upper():
+        #    print(tup[STUDENT_LAST],
+        #          tup[STUDENT_FIRST])
+    initiatePrompt(tableset, teacherset)
 
 
-def grade(table, grade):
-    for tup in table:
+def grade(tableset, teacherset, grade):
+    for tup in tableset:
         if tup[GRADE] == grade:
             print(tup[STUDENT_LAST],
                   tup[STUDENT_FIRST])
-    initiatePrompt(table)
+    initiatePrompt(tableset, teacherset)
 
 
-def bus(table, bus_route):
-    for tup in table:
+def bus(tableset, teacherset, bus_route):
+    for tup in tableset:
         if int(tup[BUS]) == bus_route:
             print(tup[STUDENT_LAST],
                   tup[STUDENT_FIRST],
                   tup[GRADE],
                   tup[CLASSROOM])
-    initiatePrompt(table)
+    initiatePrompt(tableset, teacherset)
 
 
-def grade_high(table, grade):
+def grade_high(tableset, teacherset, grade):
     highest_gpa = 0.0
-    for tup in table:
+    for tup in tableset:
         if int(tup[GRADE]) == grade:
             if float(tup[GPA]) > highest_gpa:
                 highest_gpa = float(tup[GPA])
-    for tup in table:
+    for tup in tableset:
         if int(tup[GRADE]) == grade and float(tup[GPA]) == highest_gpa:
             print(tup[STUDENT_LAST],
                   tup[STUDENT_FIRST],
                   tup[GPA],
-                  tup[TEACHER_LAST],
-                  tup[TEACHER_FIRST],
+                  #tup[TEACHER_LAST],
+                  #tup[TEACHER_FIRST],
                   tup[BUS])
-    initiatePrompt(table)
+    initiatePrompt(tableset, teacherset)
 
 
-def grade_low(table, grade):
+def grade_low(tableset, teacherset, grade):
     lowest_gpa = 10.0
-    for tup in table:
+    for tup in tableset:
         if int(tup[GRADE]) == grade:
             if float(tup[GPA]) < lowest_gpa:
                 lowest_gpa = float(tup[GPA])
-    for tup in table:
+    for tup in tableset:
         if int(tup[GRADE]) == grade and float(tup[GPA]) == lowest_gpa:
             print(tup[STUDENT_LAST],
                   tup[STUDENT_FIRST],
                   tup[GPA],
-                  tup[TEACHER_LAST],
-                  tup[TEACHER_FIRST],
+                  #tup[TEACHER_LAST],
+                  #tup[TEACHER_FIRST],
                   tup[BUS])
-    initiatePrompt(table)
+    initiatePrompt(tableset, teacherset)
 
-def grade_teachers(table, grade):
+def grade_teachers(tableset, teacherset, grade):
     print("Not written yet")
+    initiatePrompt(tableset, teacherset)
 
 
-def average(table, grade):
+def average(tableset, teacherset, grade):
     total = 0.0
     num = 0
     for tup in table:
@@ -206,20 +209,21 @@ def average(table, grade):
             num += 1
     if num != 0:
         print(grade, total / num)
-    initiatePrompt(table)
+    initiatePrompt(tableset, teacherset)
 
 
-def info(table):
+def info(tableset, teacherset):
     for i in range(7):
         total = 0
-        for tup in table:
+        for tup in tableset:
             if int(tup[GRADE]) == i:
                 total += 1
         print(str(i) + ":", str(total))
-    initiatePrompt(table)
+    initiatePrompt(tableset, teacherset)
 
-def enrollment(table):
+def enrollment(tableset, teacherset):
     print("Not written yet")
+    initiatePrompt(tableset, teacherset)
 
 def prompt():
     print('''Commands:
