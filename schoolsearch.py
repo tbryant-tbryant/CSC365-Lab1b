@@ -16,7 +16,7 @@ def main():
 STUDENT_LAST = 0  # STRING
 STUDENT_FIRST = 1  # STRING
 GRADE = 2  # INT
-CLASSROOM = 3  # INT
+STUDENT_CLASSROOM = 3  # INT
 BUS = 4  # INT
 GPA = 5  # FLOAT
 
@@ -63,15 +63,25 @@ def parseInput(request, tableset, teacherset):
             average(tableset, teacherset, int(pair[1]))
 
 
-def getTeacher(tableset, teacherset, last_name):
+def getTeacher(tableset, teacherset, student_last_name):
     for tup in tableset:
-        if tup[STUDENT_LAST].upper() == last_name.upper():
+        if tup[STUDENT_LAST].upper() == student_last_name.upper():
             for teach in teacherset:
-                if teach[TEACHER_CLASSROOM] == tup[CLASSROOM]:
+                if teach[TEACHER_CLASSROOM] == tup[STUDENT_CLASSROOM]:
                     return teach
             break
     return ()
 
+
+def getStudents(tableset, teacherset, teacher_last_name):
+    studentset = set([])
+    for teacher in teacherset:
+        if teacher[TEACHER_LAST].upper() == teacher_last_name.upper():
+            classroom = teacher[TEACHER_CLASSROOM]
+            for tup in tableset:
+                if tup[STUDENT_CLASSROOM] == classroom:
+                    studentset.add(tup)
+    return studentset
 
 
 def studentHelper(tup, tableset, teacherset):
@@ -116,12 +126,13 @@ def initiatePrompt(tableset, teacherset):
 def student(tableset, teacherset, last_name):
     for tup in tableset:
         if tup[STUDENT_LAST].upper() == last_name.upper():
+            teacher = getTeacher(tableset, teacherset, last_name)
             print(tup[STUDENT_LAST],
                   tup[STUDENT_FIRST],
                   tup[GRADE],
-                  tup[CLASSROOM],
-                  #tup[TEACHER_LAST],
-                  #tup[TEACHER_FIRST]
+                  tup[STUDENT_CLASSROOM],
+                  teacher[TEACHER_LAST],
+                  teacher[TEACHER_FIRST]
                   )
     initiatePrompt(tableset, teacherset)
 
@@ -136,11 +147,12 @@ def student_bus(tableset, teacherset, last_name):
 
 
 def teacher(tableset, teacherset, last_name):
-    # REWRITE
-    #for tup in tableset:
-        #if tup[TEACHER_LAST].upper() == last_name.upper():
-        #    print(tup[STUDENT_LAST],
-        #          tup[STUDENT_FIRST])
+    for teacher in teacherset:
+        if teacher[TEACHER_LAST].upper() == last_name.upper():
+            for student in getStudents(tableset, teacherset, last_name):
+                print(student[STUDENT_LAST],
+                      student[STUDENT_FIRST])
+            break
     initiatePrompt(tableset, teacherset)
 
 
@@ -158,7 +170,7 @@ def bus(tableset, teacherset, bus_route):
             print(tup[STUDENT_LAST],
                   tup[STUDENT_FIRST],
                   tup[GRADE],
-                  tup[CLASSROOM])
+                  tup[STUDENT_CLASSROOM])
     initiatePrompt(tableset, teacherset)
 
 
@@ -170,11 +182,12 @@ def grade_high(tableset, teacherset, grade):
                 highest_gpa = float(tup[GPA])
     for tup in tableset:
         if int(tup[GRADE]) == grade and float(tup[GPA]) == highest_gpa:
+            teach = getTeacher(tableset, teacherset, tup[STUDENT_LAST])
             print(tup[STUDENT_LAST],
                   tup[STUDENT_FIRST],
                   tup[GPA],
-                  #tup[TEACHER_LAST],
-                  #tup[TEACHER_FIRST],
+                  teach[TEACHER_LAST],
+                  teach[TEACHER_FIRST],
                   tup[BUS])
     initiatePrompt(tableset, teacherset)
 
@@ -187,11 +200,12 @@ def grade_low(tableset, teacherset, grade):
                 lowest_gpa = float(tup[GPA])
     for tup in tableset:
         if int(tup[GRADE]) == grade and float(tup[GPA]) == lowest_gpa:
+            teach = getTeacher(tableset, teacherset, tup[STUDENT_LAST])
             print(tup[STUDENT_LAST],
                   tup[STUDENT_FIRST],
                   tup[GPA],
-                  #tup[TEACHER_LAST],
-                  #tup[TEACHER_FIRST],
+                  teach[TEACHER_LAST],
+                  teach[TEACHER_FIRST],
                   tup[BUS])
     initiatePrompt(tableset, teacherset)
 
