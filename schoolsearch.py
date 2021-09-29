@@ -203,7 +203,7 @@ def grade_teachers(tableset, teacherset, grade):
 def average(tableset, teacherset, grade):
     total = 0.0
     num = 0
-    for tup in table:
+    for tup in tableset:
         if int(tup[GRADE]) == grade:
             total += float(tup[GPA])
             num += 1
