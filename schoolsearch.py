@@ -62,7 +62,8 @@ def parseInput(request, tableset, teacherset):
         if pair[0] == "Average" or pair[0] == "A":
             average(tableset, teacherset, int(pair[1]))
         if pair[0] == "Class" or pair[0] == "C":
-            class_(tableset, teacherset, int(pair[1]))
+            # do a class_helper here
+            class_students(tableset, teacherset, int(pair[1]))
 
 
 def getTeacher(tableset, teacherset, student_last_name):
@@ -228,10 +229,14 @@ def average(tableset, teacherset, grade):
     initiatePrompt(tableset, teacherset)
 
 
-def class_(tableset, teacherset, classnum):
+def class_students(tableset, teacherset, classnum):
     print("Not yet written")
     initiatePrompt(tableset, teacherset)
 
+
+def class_teachers(tableset, teacherset, classnum):
+    print("Not yet written")
+    initiatePrompt(tableset, teacherset)
 
 def info(tableset, teacherset):
     for i in range(7):
