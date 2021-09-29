@@ -7,13 +7,12 @@ def main():
         quit()
     tableset = formatList(list)
     teacherset = formatTeachers(teachers)
-    print(tableset)
-    print(teacherset)
     list.close()
     teachers.close()
     initiatePrompt(tableset)
 
 
+# list.txt, ex: (COOKUS, XUAN, 3, 107, 52, 3.07)
 STUDENT_LAST = 0  # STRING
 STUDENT_FIRST = 1  # STRING
 GRADE = 2  # INT
@@ -21,6 +20,7 @@ CLASSROOM = 3  # INT
 BUS = 4  # INT
 GPA = 5  # FLOAT
 
+# teachers.txt, ex: (COOL, REUBEN, 101)
 TEACHER_LAST = 0 # STRING
 TEACHER_FIRST = 1 # STRING
 TEACHER_CLASSROOM = 2 # INT
