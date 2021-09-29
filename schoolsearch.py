@@ -21,6 +21,10 @@ CLASSROOM = 3  # INT
 BUS = 4  # INT
 GPA = 5  # FLOAT
 
+TEACHER_LAST = 0 # STRING
+TEACHER_FIRST = 1 # STRING
+TEACHER_CLASSROOM = 2 # INT
+
 
 def formatList(file):
     tableset = set([])
@@ -57,6 +61,17 @@ def parseInput(request, tableset):
             gradeHelper([item.strip() for item in pair[1].split(" ")], tableset)
         if pair[0] == "Average" or pair[0] == "A":
             average(tableset, int(pair[1]))
+
+
+def getTeacher(tableset, teacherset, last_name):
+    for tup in tableset:
+        if tup[STUDENT_LAST].upper() == last_name.upper():
+            for teach in teacherset:
+                if teach[TEACHER_CLASSROOM] == tup[CLASSROOM]:
+                    return teach
+            break
+    return ()
+
 
 
 def studentHelper(tup, tableset):
