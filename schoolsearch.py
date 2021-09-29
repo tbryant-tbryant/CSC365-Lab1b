@@ -84,7 +84,8 @@ def initiatePrompt(tableset):
            req[:3] != "G: " and req[:7] != "Grade: " and
            req[:3] != "B: " and req[:5] != "Bus: " and
            req[:3] != "T: " and req[:9] != "Teacher: " and
-           req[:3] != "S: " and req[:9] != "Student: "):
+           req[:3] != "S: " and req[:9] != "Student: " and
+           req[:3] != "C: " and req[:7] != "Class: "):
         req = prompt()
     if req == "Q" or req == "Quit":
         quit()
@@ -200,8 +201,10 @@ def prompt():
         S[tudent]: <lastname> [B[us]]
         T[eacher]: <lastname>
         B[us]: <number>
-        G[rade]: <number> [H[igh] | L[ow]]
+        G[rade]: <number> [H[igh] | L[ow] | T[eachers]]
         A[verage]: <number>
+        C[lass]: <number> [T[eachers] | S[tudents]]
+        E[nrollment]
         I[nfo]
         Q[uit]''')
     request = input("Request: ")
