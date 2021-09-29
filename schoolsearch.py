@@ -212,6 +212,11 @@ def average(tableset, teacherset, grade):
     initiatePrompt(tableset, teacherset)
 
 
+def class_(tableset, teacherset, classnum):
+    print("Not yet written")
+    initiatePrompt(tableset, teacherset)
+
+
 def info(tableset, teacherset):
     for i in range(7):
         total = 0
