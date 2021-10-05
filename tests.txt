@@ -1,0 +1,494 @@
+// CSC 365
+// Lab 1-a test suite
+
+// TC-1
+// Tests Requirements R3, R4
+// short form command name, existing student
+// expected output: EARLY TORY 3 107 FAFARD ROCIO
+
+S: EARLY
+
+// TC-2
+// Tests Requirements R3, R4
+// long form command name, non-existing student
+// expected output: <nothing>
+
+STUDENT: CUMBERBATCH
+
+// TC-3
+// Tests Requirements R3, R5
+// short form command name, short form bus option (B), existing student
+// expected output: EARLY TORY 52
+
+S: EARLY B
+
+// TC-4
+// Tests Requirements R3, R5
+// long form command name, long form bus option (Bus), non-existing student
+// expected output: <nothing>
+
+Student: ZEDONG Bus
+
+// TC-5
+// Tests Requirements R3, R6
+// short form command name, existing teacher
+// expected output (multiline):
+// BUSSMANN BILLY
+// BERBES DICK
+// KOZOLA BUSTER
+// MULLINGS LEIGHANN
+// MULGREW RANDELL
+// SARAO DIEDRA
+// LIBRANDI TODD
+// TOWLEY LANE
+// HAVIR BOBBIE
+// WICINSKY TERESE
+// VANCOTT MIKE
+
+T: Hamer
+
+// TC-6
+// Tests Requirements R3, R6
+// long form command name, non-existing teacher
+// expected output: <nothing>
+
+T: GUEVARA
+
+// TC-7
+// Tests Requirements R3, R8
+// short form command name, non-empty bus
+// expected output (multiline):
+// EARLY TORY 3 107
+// ELHADDAD SHANTE 3 107
+// KEMERER ROSETTA 6 102
+// OBREIN STAN 6 111
+// COOKUS XUAN 3 107
+// SARAO DIEDRA 2 108
+// CORONADO DIMPLE 6 102
+// IMMERMAN DEVIN 4 105
+
+B: 52
+
+// TC-8
+// Tests Requirements R3, R8
+// long form command name, empty bus
+// expected output: <nothing>
+
+Bus: 8008
+
+// TC-9
+// Tests Requirements R3, R9
+// short form command name, non-empty grade, (no High/Low modifier)
+// expected output (mutiline):
+// BUSSMANN BILLY
+// BERBES DICK
+// KOZOLA BUSTER
+// MULLINGS LEIGHANN
+// MULGREW RANDELL
+// SARAO DIEDRA
+// LIBRANDI TODD
+// TOWLEY LANE
+// HAVIR BOBBIE
+// WOOLERY NOLAN
+// WICINSKY TERESE
+// VANCOTT MIKE
+// VILARDO EMMANUEL
+
+G: 2
+
+// TC-10
+// Tests Requirements R3, R9
+// long form command name, empty grade, (no High/Low modifier)
+// expected output: <nothing>
+
+Grade: 14
+
+// TC-11
+// Tests Requirements R3, R9
+// short form command name, non-empty grade, High modifier
+// expected output: LAMKIN TAMA 3.23 NISTENDIRK NANCY 55
+
+G: 6 High
+
+// TC-12
+// Tests Requirements R3, R9
+// long form command name, empty grade, H modifier
+// expected output: <nothing>
+
+Grade: 69 H
+
+// TC-13
+// Tests Requirements R3, R9
+// short form command name, empty grade, Low modifier
+// expected output: <nothing>
+
+Grade: 69 Low
+
+// TC-14
+// Tests Requirements R3, R9
+// short form command name, non-empty grade, L modifier
+// expected output: KOZOLA BUSTER 2.76 HAMER GAVIN 55
+
+G: 2 L
+
+// TC-15
+// Tests Requirements R3, R10
+// short form command name, non-empty grade
+// expected output: 6 2.9771428571428578
+
+G: 2 T
+
+// TC-16
+// Tests Requirements NR3
+// short form command name, non-empty grade
+// expected output (multiline):
+// HAMER GAVIN
+// STEIB GALE
+
+Grade: 4 Teachers
+
+// TC-17
+// Tests Requirements NR3
+// short form command name, non-empty grade
+// expected output (multiline):
+// HANTZ JED
+// CHIONCHIO PERLA
+// COOL REUBEN
+
+A: 6
+
+// TC-18
+// Tests Requirements R3, R10
+// long form command name, empty grade
+// expected output: <nothing>
+
+Average: 6000
+
+// TC-19
+// Tests Requirements R3, R11
+// short form command name
+// expected output (multiline):
+// 0: 0
+// 1: 2
+// 2: 13
+// 3: 9
+// 4: 15
+// 5: 0
+// 6: 21
+
+I
+
+// TC-20
+// Tests Requirements R3, R11
+// long form command name
+// expected output (multiline):
+// 0: 0
+// 1: 2
+// 2: 13
+// 3: 9
+// 4: 15
+// 5: 0
+// 6: 21
+
+Info
+
+// TC-21
+// Tests Requirements R3, R13
+// long form command name (quit)
+// expected output: program terminates
+
+Quit
+
+// TC-22
+// Tests Requirements R3, R13
+// short form command name (quit)
+// expected output: program terminates
+
+Q
+
+// TC-23
+// Tests Requirements NR2
+// short form command name, T modifier
+// expected output: HANTZ JED
+
+C: 105 T
+
+// TC-24
+// Tests Requirements NR2
+// long form command name, Teachers modifier
+// expected output: COOL REUBEN
+
+Class: 101 Teachers
+
+// TC-25
+// Tests Requirements NR2
+// long form command name, Teachers modifier, empty class
+// expected output: <nothing>
+
+Class: 77 Teachers
+
+// TC-26
+// Tests Requirements NR1
+// short form command name, S modifier
+// expected output (multiline):
+// IMMERMAN DEVIN
+// OGAS ERVIN
+// RAPOSE ALONZO
+// MASSART ELDON
+// CORKER CARTER
+// BEX TAMESHA
+
+C: 105 S
+
+// TC-27
+// Tests Requirements NR1
+// long form command name, Students modifier
+// expected output: DURAND CARLEE
+
+Class: 101 Students
+
+// TC-28
+// Tests Requirements NR1
+// long form command name, Students modifier, empty class
+// expected output: <nothing>
+
+Class: 77 Students
+
+// TC-29
+// Tests Requirements NR4
+// short form command name
+// expected output (multiline):
+// 101: 1
+// 102: 5
+// 103: 2
+// 104: 2
+// 105: 6
+// 106: 2
+// 107: 7
+// 108: 11
+// 109: 5
+// 110: 2
+// 111: 9
+// 112: 8
+
+E
+
+// TC-30
+// Tests Requirements NR4
+// long form command name
+// expected output (multiline):
+// 101: 1
+// 102: 5
+// 103: 2
+// 104: 2
+// 105: 6
+// 106: 2
+// 107: 7
+// 108: 11
+// 109: 5
+// 110: 2
+// 111: 9
+// 112: 8
+
+Enrollment
+
+// TC-31
+// Tests Requirements NR5
+// short form command name, G modifier
+// expected output (multiline):
+// 6 2.95
+// 6 2.88
+// 1 2.85
+// 2 2.88
+// 2 2.92
+// 4 2.78
+// 6 3.03
+// 3 3.11
+// 6 3.13
+// 4 2.95
+// 3 3.12
+// 4 3.02
+// 4 2.84
+// 6 3.23
+// 3 2.79
+// 2 2.96
+// 2 2.89
+// 3 3.07
+// 3 2.86
+// 3 3.23
+// 4 3.12
+// 6 2.88
+// 2 3.05
+// 4 2.8
+// 6 2.84
+// 3 3.11
+// 4 3
+// 4 2.91
+// 6 2.82
+// 6 2.89
+// 6 3.02
+// 6 2.81
+// 6 3.15
+// 4 2.99
+// 4 3.1
+// 4 2.97
+// 6 2.93
+// 2 2.76
+// 2 2.88
+// 1 3.14
+// 6 2.88
+// 2 3.01
+// 4 3.12
+// 2 3.22
+// 6 2.85
+// 4 2.98
+// 6 3.14
+// 6 3.15
+// 3 2.91
+// 3 3.24
+// 2 2.79
+// 2 3.09
+// 6 3.22
+// 6 2.78
+// 2 2.93
+// 6 2.84
+// 2 2.92
+// 6 3.1
+// 4 2.82
+// 4 2.87
+
+D: G
+
+// TC-32
+// Tests Requirements NR5
+// long form command name, Teacher modifier
+// expected output (multiline):
+// STEIB 2.88
+// STEIB 2.92
+// FAFARD 2.91
+// FAFARD 3.11
+// FAFARD 2.86
+// FAFARD 3.07
+// FAFARD 3.12
+// FAFARD 3.24
+// FAFARD 2.79
+// FALKER 2.85
+// FALKER 3.14
+// COOL 2.91
+// GAMBREL 2.78
+// GAMBREL 3.15
+// GAMBREL 2.85
+// GAMBREL 3.14
+// GAMBREL 2.88
+// CHIONCHIO 3.02
+// CHIONCHIO 2.87
+// CHIONCHIO 2.95
+// CHIONCHIO 3.1
+// CHIONCHIO 2.99
+// CHIONCHIO 2.97
+// CHIONCHIO 2.98
+// CHIONCHIO 3
+// BODZIONY 3.15
+// BODZIONY 3.03
+// NISTENDIRK 3.02
+// NISTENDIRK 2.82
+// NISTENDIRK 2.95
+// NISTENDIRK 3.22
+// NISTENDIRK 2.88
+// NISTENDIRK 3.23
+// NISTENDIRK 2.81
+// NISTENDIRK 2.84
+// NISTENDIRK 2.89
+// HANTZ 2.78
+// HANTZ 2.8
+// HANTZ 2.82
+// HANTZ 3.12
+// HANTZ 3.12
+// HANTZ 2.84
+// HAMER 3.05
+// HAMER 2.92
+// HAMER 3.22
+// HAMER 3.09
+// HAMER 3.01
+// HAMER 2.76
+// HAMER 2.88
+// HAMER 2.79
+// HAMER 2.89
+// HAMER 2.93
+// HAMER 2.96
+// ALPERT 3.11
+// ALPERT 3.23
+// KERBS 2.84
+// KERBS 2.93
+// KERBS 2.88
+// KERBS 3.13
+// KERBS 3.1
+
+Data: Teacher
+
+// TC-33
+// Tests Requirements NR5
+// long form command name, B modifier
+// expected output (multiline):
+// 54 2.85
+// 54 2.95
+// 55 2.82
+// 55 2.88
+// 0 3.15
+// 52 2.86
+// 0 2.81
+// 52 3.07
+// 0 2.88
+// 53 3.1
+// 0 2.88
+// 53 2.99
+// 55 3.15
+// 53 2.79
+// 55 3.24
+// 56 3.13
+// 54 2.98
+// 55 3.1
+// 51 2.96
+// 51 3.02
+// 54 2.97
+// 54 2.82
+// 53 3
+// 54 2.87
+// 54 3.05
+// 54 2.92
+// 53 3.22
+// 52 2.91
+// 51 3.11
+// 55 3.23
+// 54 2.84
+// 52 2.79
+// 56 2.84
+// 51 3.03
+// 0 3.11
+// 54 2.93
+// 51 2.92
+// 51 3.09
+// 51 2.91
+// 52 2.84
+// 52 2.78
+// 56 3.01
+// 0 2.8
+// 55 2.93
+// 51 3.12
+// 56 2.88
+// 0 2.85
+// 53 3.02
+// 56 2.78
+// 52 2.95
+// 55 3.22
+// 55 2.76
+// 54 3.23
+// 53 3.14
+// 53 3.12
+// 52 2.88
+// 53 3.12
+// 54 2.89
+// 56 2.89
+// 0 3.14
+
+Data: B
