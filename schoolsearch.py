@@ -322,7 +322,7 @@ def enrollment(tableset, teacherset):
         for tup in tableset:
             if int(tup[STUDENT_CLASSROOM]) == classroomnum:
                 enrolled += 1
-        print(classroomnum, enrolled)
+        print(str(classroomnum) + ":", str(enrolled))
     initiatePrompt(tableset, teacherset)
 
 
