@@ -284,14 +284,21 @@ def class_teachers(tableset, teacherset, classnum):
 
 
 def data_grade(tableset, teacherset):
+    for tup in tableset:
+        print(tup[GRADE], tup[GPA])
     initiatePrompt(tableset, teacherset)
 
 
 def data_teacher(tableset, teacherset):
+    for teach in teacherset:
+        for student in getStudents(tableset, teacherset, teach[TEACHER_LAST]):
+            print(teach[TEACHER_LAST], student[GPA])
     initiatePrompt(tableset, teacherset)
 
 
 def data_bus(tableset, teacherset):
+    for tup in tableset:
+        print(tup[BUS], tup[GPA])
     initiatePrompt(tableset, teacherset)
 
 
