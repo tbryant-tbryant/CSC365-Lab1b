@@ -71,23 +71,22 @@ def parseInput(request, tableset, teacherset):
         initiatePrompt(tableset, teacherset)
 
 
-def getTeacher(tableset, teacherset, student_last_name):
+def getTeachers(tableset, teacherset, student_last_name):
+    teachers = set([])
     for tup in tableset:
         if tup[STUDENT_LAST].upper() == student_last_name.upper():
             for teach in teacherset:
                 if teach[TEACHER_CLASSROOM] == tup[STUDENT_CLASSROOM]:
-                    return teach
-            break
-    return ()
+                    teachers.add(teach)
+    return teachers
 
 
 def getStudents(tableset, teacherset, teacher_last_name):
     studentset = set([])
-    for teacher in teacherset:
-        if teacher[TEACHER_LAST].upper() == teacher_last_name.upper():
-            classroom = teacher[TEACHER_CLASSROOM]
+    for teach in teacherset:
+        if teach[TEACHER_LAST].upper() == teacher_last_name.upper():
             for tup in tableset:
-                if tup[STUDENT_CLASSROOM] == classroom:
+                if tup[STUDENT_CLASSROOM] == teach[TEACHER_CLASSROOM]:
                     studentset.add(tup)
     return studentset
 
@@ -161,14 +160,13 @@ def initiatePrompt(tableset, teacherset):
 def student(tableset, teacherset, last_name):
     for tup in tableset:
         if tup[STUDENT_LAST].upper() == last_name.upper():
-            teacher = getTeacher(tableset, teacherset, last_name)
-            print(tup[STUDENT_LAST],
-                  tup[STUDENT_FIRST],
-                  tup[GRADE],
-                  tup[STUDENT_CLASSROOM],
-                  teacher[TEACHER_LAST],
-                  teacher[TEACHER_FIRST]
-                  )
+            for teach in getTeachers(tableset, teacherset, last_name):
+                print(tup[STUDENT_LAST],
+                      tup[STUDENT_FIRST],
+                      tup[GRADE],
+                      tup[STUDENT_CLASSROOM],
+                      teach[TEACHER_LAST],
+                      teach[TEACHER_FIRST])
     initiatePrompt(tableset, teacherset)
 
 
@@ -182,11 +180,11 @@ def student_bus(tableset, teacherset, last_name):
 
 
 def teacher(tableset, teacherset, last_name):
-    for teacher in teacherset:
-        if teacher[TEACHER_LAST].upper() == last_name.upper():
-            for student in getStudents(tableset, teacherset, last_name):
-                print(student[STUDENT_LAST],
-                      student[STUDENT_FIRST])
+    for teach in teacherset:
+        if teach[TEACHER_LAST].upper() == last_name.upper():
+            for tup in getStudents(tableset, teacherset, last_name):
+                print(tup[STUDENT_LAST],
+                      tup[STUDENT_FIRST])
             break
     initiatePrompt(tableset, teacherset)
 
@@ -217,13 +215,13 @@ def grade_high(tableset, teacherset, grade):
                 highest_gpa = float(tup[GPA])
     for tup in tableset:
         if int(tup[GRADE]) == grade and float(tup[GPA]) == highest_gpa:
-            teach = getTeacher(tableset, teacherset, tup[STUDENT_LAST])
-            print(tup[STUDENT_LAST],
-                  tup[STUDENT_FIRST],
-                  tup[GPA],
-                  teach[TEACHER_LAST],
-                  teach[TEACHER_FIRST],
-                  tup[BUS])
+            for teach in getTeachers(tableset, teacherset, tup[STUDENT_LAST]):
+                print(tup[STUDENT_LAST],
+                      tup[STUDENT_FIRST],
+                      tup[GPA],
+                      teach[TEACHER_LAST],
+                      teach[TEACHER_FIRST],
+                      tup[BUS])
     initiatePrompt(tableset, teacherset)
 
 
@@ -235,13 +233,13 @@ def grade_low(tableset, teacherset, grade):
                 lowest_gpa = float(tup[GPA])
     for tup in tableset:
         if int(tup[GRADE]) == grade and float(tup[GPA]) == lowest_gpa:
-            teach = getTeacher(tableset, teacherset, tup[STUDENT_LAST])
-            print(tup[STUDENT_LAST],
-                  tup[STUDENT_FIRST],
-                  tup[GPA],
-                  teach[TEACHER_LAST],
-                  teach[TEACHER_FIRST],
-                  tup[BUS])
+            for teach in getTeachers(tableset, teacherset, tup[STUDENT_LAST]):
+                print(tup[STUDENT_LAST],
+                      tup[STUDENT_FIRST],
+                      tup[GPA],
+                      teach[TEACHER_LAST],
+                      teach[TEACHER_FIRST],
+                      tup[BUS])
     initiatePrompt(tableset, teacherset)
 
 
@@ -251,7 +249,7 @@ def grade_teachers(tableset, teacherset, grade):
         if int(tup[GRADE]) == grade:
             classroom = int(tup[STUDENT_CLASSROOM])
             for teach in teacherset:
-                if int(teach[TEACHER_CLASSROOM]) == classroom and not teach in printed:
+                if int(teach[TEACHER_CLASSROOM]) == classroom and teach not in printed:
                     print(teach[TEACHER_LAST], teach[TEACHER_FIRST])
                     printed.append(teach)
     initiatePrompt(tableset, teacherset)
@@ -291,8 +289,8 @@ def data_grade(tableset, teacherset):
 
 def data_teacher(tableset, teacherset):
     for teach in teacherset:
-        for student in getStudents(tableset, teacherset, teach[TEACHER_LAST]):
-            print(teach[TEACHER_LAST], student[GPA])
+        for tup in getStudents(tableset, teacherset, teach[TEACHER_LAST]):
+            print(teach[TEACHER_LAST], tup[GPA])
     initiatePrompt(tableset, teacherset)
 
 
