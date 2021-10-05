@@ -62,8 +62,7 @@ def parseInput(request, tableset, teacherset):
         if pair[0] == "Average" or pair[0] == "A":
             average(tableset, teacherset, int(pair[1]))
         if pair[0] == "Class" or pair[0] == "C":
-            # do a class_helper here
-            class_students(tableset, teacherset, int(pair[1]))
+            classHelper([item.strip() for item in pair[1].split(" ")], tableset, teacherset)
 
 
 def getTeacher(tableset, teacherset, student_last_name):
@@ -106,10 +105,19 @@ def gradeHelper(tup, tableset, teacherset):
         grade(tableset, teacherset, tup[0])
 
 
+def classHelper(tup, tableset, teacherset):
+    if len(tup) == 2:
+        if tup[1] == "T" or tup[1] == "Teachers":
+            class_teachers(tableset, teacherset, int(tup[0]))
+        elif tup[1] == "S" or tup[1] == "Students":
+            class_students(tableset, teacherset, int(tup[0]))
+
+
 def initiatePrompt(tableset, teacherset):
     req = prompt()
     while (req != "I" and req != "Info" and
            req != "Q" and req != "Quit" and
+           req != "E" and req != "Enrollment" and
            req[:3] != "A: " and req[:9] != "Average: " and
            req[:3] != "G: " and req[:7] != "Grade: " and
            req[:3] != "B: " and req[:5] != "Bus: " and
@@ -212,8 +220,16 @@ def grade_low(tableset, teacherset, grade):
                   tup[BUS])
     initiatePrompt(tableset, teacherset)
 
+
 def grade_teachers(tableset, teacherset, grade):
-    print("Not written yet")
+    printed = []
+    for tup in tableset:
+        if int(tup[GRADE]) == grade:
+            classroom = int(tup[STUDENT_CLASSROOM])
+            for teach in teacherset:
+                if int(teach[TEACHER_CLASSROOM]) == classroom and not teach in printed:
+                    print(teach[TEACHER_LAST], teach[TEACHER_FIRST])
+                    printed.append(teach)
     initiatePrompt(tableset, teacherset)
 
 
@@ -230,13 +246,18 @@ def average(tableset, teacherset, grade):
 
 
 def class_students(tableset, teacherset, classnum):
-    print("Not yet written")
+    for tup in tableset:
+        if int(tup[STUDENT_CLASSROOM]) == classnum:
+            print(tup[STUDENT_LAST], tup[STUDENT_FIRST])
     initiatePrompt(tableset, teacherset)
 
 
 def class_teachers(tableset, teacherset, classnum):
-    print("Not yet written")
+    for teach in teacherset:
+        if int(teach[TEACHER_CLASSROOM]) == classnum:
+            print(teach[TEACHER_LAST], teach[TEACHER_FIRST])
     initiatePrompt(tableset, teacherset)
+
 
 def info(tableset, teacherset):
     for i in range(7):
@@ -247,9 +268,20 @@ def info(tableset, teacherset):
         print(str(i) + ":", str(total))
     initiatePrompt(tableset, teacherset)
 
+
 def enrollment(tableset, teacherset):
-    print("Not written yet")
+    classrooms = []
+    for teach in teacherset:
+        if int(teach[TEACHER_CLASSROOM]) not in classrooms:
+           classrooms.append(int(teach[TEACHER_CLASSROOM]))
+    for classroomnum in sorted(classrooms):
+        enrolled = 0
+        for tup in tableset:
+            if int(tup[STUDENT_CLASSROOM]) == classroomnum:
+                enrolled += 1
+        print(classroomnum, enrolled)
     initiatePrompt(tableset, teacherset)
+
 
 def prompt():
     print('''Commands:
