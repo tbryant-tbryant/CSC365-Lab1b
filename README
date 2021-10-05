@@ -1,0 +1,4 @@
+Compilation: schoolsearch.py is a Python 3 file requiring no compilation.
+Running: Can be ran with the command:
+          python3 schoolsearch.py
+User will be prompted for input upon running.
