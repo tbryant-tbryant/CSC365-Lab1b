@@ -53,16 +53,22 @@ def parseInput(request, tableset, teacherset):
     if len(pair) > 1:
         if pair[0] == "Student" or pair[0] == "S":
             studentHelper([item.strip() for item in pair[1].split(" ")], tableset, teacherset)
-        if pair[0] == "Teacher" or pair[0] == "T":
+        elif pair[0] == "Teacher" or pair[0] == "T":
             teacher(tableset, teacherset, pair[1])
-        if pair[0] == "Bus" or pair[0] == "B":
+        elif pair[0] == "Bus" or pair[0] == "B":
             bus(tableset, teacherset, int(pair[1]))
-        if pair[0] == "Grade" or pair[0] == "G":
+        elif pair[0] == "Grade" or pair[0] == "G":
             gradeHelper([item.strip() for item in pair[1].split(" ")], tableset, teacherset)
-        if pair[0] == "Average" or pair[0] == "A":
+        elif pair[0] == "Average" or pair[0] == "A":
             average(tableset, teacherset, int(pair[1]))
-        if pair[0] == "Class" or pair[0] == "C":
+        elif pair[0] == "Class" or pair[0] == "C":
             classHelper([item.strip() for item in pair[1].split(" ")], tableset, teacherset)
+        elif pair[0] == "Data" or pair[0] == "D":
+            dataHelper(pair[1], tableset, teacherset)
+        else:
+            initiatePrompt(tableset, teacherset)
+    else:
+        initiatePrompt(tableset, teacherset)
 
 
 def getTeacher(tableset, teacherset, student_last_name):
@@ -91,6 +97,8 @@ def studentHelper(tup, tableset, teacherset):
         student(tableset, teacherset, tup[0])
     elif len(tup) == 2:
         student_bus(tableset, teacherset, tup[0])
+    else:
+        initiatePrompt(tableset, teacherset)
 
 
 def gradeHelper(tup, tableset, teacherset):
@@ -111,6 +119,21 @@ def classHelper(tup, tableset, teacherset):
             class_teachers(tableset, teacherset, int(tup[0]))
         elif tup[1] == "S" or tup[1] == "Students":
             class_students(tableset, teacherset, int(tup[0]))
+        else:
+            initiatePrompt(tableset, teacherset)
+    else:
+        initiatePrompt(tableset, teacherset)
+
+
+def dataHelper(type, tableset, teacherset):
+    if type == "G" or type == "Grade":
+        data_grade(tableset, teacherset)
+    elif type == "T" or type == "Teacher":
+        data_teacher(tableset, teacherset)
+    elif type == "B" or type == "Bus":
+        data_bus(tableset, teacherset)
+    else:
+        initiatePrompt(tableset, teacherset)
 
 
 def initiatePrompt(tableset, teacherset):
@@ -123,7 +146,8 @@ def initiatePrompt(tableset, teacherset):
            req[:3] != "B: " and req[:5] != "Bus: " and
            req[:3] != "T: " and req[:9] != "Teacher: " and
            req[:3] != "S: " and req[:9] != "Student: " and
-           req[:3] != "C: " and req[:7] != "Class: "):
+           req[:3] != "C: " and req[:7] != "Class: " and
+           req[:3] != "D: " and req[:6] != "Data: "):
         req = prompt()
     if req == "Q" or req == "Quit":
         quit()
@@ -259,6 +283,18 @@ def class_teachers(tableset, teacherset, classnum):
     initiatePrompt(tableset, teacherset)
 
 
+def data_grade(tableset, teacherset):
+    initiatePrompt(tableset, teacherset)
+
+
+def data_teacher(tableset, teacherset):
+    initiatePrompt(tableset, teacherset)
+
+
+def data_bus(tableset, teacherset):
+    initiatePrompt(tableset, teacherset)
+
+
 def info(tableset, teacherset):
     for i in range(7):
         total = 0
@@ -291,6 +327,7 @@ def prompt():
         G[rade]: <number> [H[igh] | L[ow] | T[eachers]]
         A[verage]: <number>
         C[lass]: <number> [T[eachers] | S[tudents]]
+        D[ata]: [G[rade] | T[eacher] | B[us]]
         E[nrollment]
         I[nfo]
         Q[uit]''')
